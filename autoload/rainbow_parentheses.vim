@@ -5,25 +5,17 @@
 "==============================================================================
 
 let s:pairs = [
-	\ ['brown',       'RoyalBlue3'],
-	\ ['Darkblue',    'SeaGreen3'],
-	\ ['darkgray',    'DarkOrchid3'],
-	\ ['darkgreen',   'firebrick3'],
-	\ ['darkcyan',    'RoyalBlue3'],
-	\ ['darkred',     'SeaGreen3'],
-	\ ['darkmagenta', 'DarkOrchid3'],
-	\ ['brown',       'firebrick3'],
-	\ ['gray',        'RoyalBlue3'],
-	\ ['black',       'SeaGreen3'],
-	\ ['darkmagenta', 'DarkOrchid3'],
-	\ ['Darkblue',    'firebrick3'],
-	\ ['darkgreen',   'RoyalBlue3'],
-	\ ['darkcyan',    'SeaGreen3'],
-	\ ['darkred',     'DarkOrchid3'],
-	\ ['red',         'firebrick3'],
+	\ ['196', 'grey55'],
+	\ ['208', '#93a8c6'],
+	\ ['220', '#b0b1a3'],
+	\ ['118', '#97b098'],
+	\ ['48', '#aebed8'],
+	\ ['50', '#b0b0b3'],
+	\ ['39', '#90a890'],
+	\ ['21', '#a2b6da'],
 	\ ]
 let s:pairs = exists('g:rbpt_colorpairs') ? g:rbpt_colorpairs : s:pairs
-let s:max = exists('g:rbpt_max') ? g:rbpt_max : max([len(s:pairs), 16])
+let s:max = exists('g:rbpt_max') ? g:rbpt_max : max([len(s:pairs), 32])
 let s:loadtgl = exists('g:rbpt_loadcmd_toggle') ? g:rbpt_loadcmd_toggle : 0
 let s:types = [['(',')'],['\[','\]'],['{','}'],['<','>']]
 
@@ -39,10 +31,13 @@ cal s:extend()
 
 func! rainbow_parentheses#activate()
 	let [id, s:active] = [1, 1]
-	for [ctermfg, guifg] in s:pairs
-		exe 'hi default level'.id.'c ctermfg='.ctermfg.' guifg='.guifg
+	
+	while id <= 32
+		:echom s:pairs[id % 8][1]
+		:echom id % 8
+		exe 'hi default level'.id.'c ctermfg='.s:pairs[id % 8][0].' guifg='.s:pairs[id % 8][1]
 		let id += 1
-	endfor
+	endwhile
 endfunc
 
 func! rainbow_parentheses#clear()
